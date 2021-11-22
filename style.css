@@ -77,4 +77,9 @@ a{
     a{
         padding-right: 180px;
     }
-  }
+}
+
+.anchor{
+    margin: auto;
+    text-align: center;
+}
