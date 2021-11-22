@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratory 6</title>
+    <link rel="stylesheet" href="lab6.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="favicon_io/site.webmanifest">
+</head>
+<header class="heading">
+    <h1 class="heading-h1">LABORATORY-6</h1>
+    <h4 class="heading-h3">Avoiding Race Condition using System Call in Linux</h4>
+</header>
+<br>
+<br>
+<br>
+<!-- <a class="command"></a> <br><br><br> -->
+<body>
+    <a class="command">A signal is just like an interrupt when it is generated at the user level a call is made to the kernel of the OS, which then acts accordingly</a> <br><br><br>
+    <a class="command">a.) Maskable <br>
+                       b.) Non-Maskable</a> <br><br><br>
+    <a class="command"><b>System Call: </b>A system call is a procedure that provide the interface between a process and the OS. it is the way by which a computer program requests a service from the kernel of the OS.
+    </a> <br><br><br>
+    <a class="command"><b>Types of System Calls:- </b>
+        <pre>
+            System  Calls:- 
+	            a.) Process Control :-  fork(), exit(), exec()
+	            b.) Device Management:- loctl();
+	            c.) File Management:- open(), read(), write(), close()
+	            d.) Information Maintenance:- getpid(), alarm(), sleep()
+	            e.) Communication:- pipe(), shmget(), mmap()
+        </pre>
+    </a> <br><br><br>
+    <a class="command">
+        <pre>
+<b>SOME IMPORTANT SIGNALS:-</b>
+
+        1.) SIGPWR:- POWER FAILURE
+        2.) SIGINT:- INTERRUPT FROM KEYBOARD
+        3.) SIGILL:- ILLEGAL INSTRUCTION
+        4.) SIGFPE:- FLOATING POINT EXECUTION
+        5.) SIGSEGV:- INVALID MEMORY REFERENCE
+        6.) SIGBUS:- BUS ERROR[BAD MEMORY ACCESS]
+        7.) SIGIO:- I/O NOW POSSIBLE
+        8.) SIGPIPE:- BROKEN PIPE: WITE THE PIPE WITH NO READERS.
+        9.) SIGKILL:- KILL SIGNAL *
+        10.) SIGSTOP:- STOP PROCESS
+        11.) SIGTSTP:- STOPED TYPES AT TERMINAL
+        12.) SIGUSR1:- USER DEFINED SIGNAL-1
+        13.) SIGHUP:- HANGUP DETECTED ON CONTROLLING TERMINAL ON DEATH OF CONTROLLING PROCESS.
+        14.) SIGALRM:- TIMER SIGNAL
+        </pre>
+    </a><br><br><br>
+
+
+    <a class="command"><b>Code for SIGINT</b></a> <br><br>
+    <pre>
+            #include "stdio.h"
+            #include "unistd.h"
+            #include "signal.h"
+            void oh(int sig){
+                printf("I got signal %d\n", sig);
+                signal(SIGINT,oh);
+            }
+            int main(){
+                signal(SIGINT,oh);
+                while(1){
+                    printf("Hello World!");
+                    sleep(1);
+                }
+            }
+    </pre>
+<br><br>
+    <a class="command"><b>Code for SIGKILL</b></a> <br><br>
+    <pre>
+            #include "stdio.h"
+            #include "unistd.h"
+            #include "signal.h"
+
+            int main(){
+                pid_t pid, ppid, cpid;
+                ppid = getpid();
+                pid = fork();
+                if(ppid == getpid()){
+                    printf("PARENT");
+                }
+                else if(cpid == getpid()){
+                    printf("CHILD");
+                }
+                if(pid > 0){
+                    int i = 0;
+                    while(i++ < 10){
+                        printf("In the parent process");
+                        sleep(1);
+                    }
+                }
+                else if(pid == 0){
+                    int i=0;
+                    while(i++ < 10){
+                        printf("In the child process");
+                        sleep(1);
+                        if(i == 3){
+                            kill(ppid,SIGKILL);
+                            printf("Parent Killed, I'm Orphan!!!!!!!!!!);
+                        }
+                    }
+                }
+                else{
+                    printf("Something bad happened");
+                    exit(EXIT_FAILURE);
+                }
+                return 0;
+            }
+
+    </pre>
+    <br><br>
+    <a class="command"><b>Code for SIGDFL</b></a> <br><br>
+    <pre>
+        #include "stdio.h"
+        #include "unistd.h"
+        #include "signal.h"
+
+        void oh(int sig){
+            printf("I got signal",sig);
+            signal(SIGINT, SIG_DFL);
+        }
+        
+        int main(){
+            signal(SIGINT,oh);
+            while(1){
+                printf("Hello World\n);
+                sleep(1);
+            }
+        }
+    </pre>
+<br><br>
+    <a class="command"><b>Code for SIGQUIT</b></a> <br><br>
+    <pre>
+        #include "stdio.h"
+        #include "unistd.h"
+        #include "signal.h"
+
+        void oh(int sig){
+            printf("I got signal",sig);
+            signal(SIGQUIT, oh);
+        }
+        
+        int main(){
+            signal(SIGQUIT,oh);
+            while(1){
+                printf("Hello World\n);
+                sleep(1);
+            }
+        }
+    </pre>
+    <br><br>
+    <a class="command"><b>Code for SIGALRM</b></a> <br><br>
+    <pre>
+        #include "stdio.h"
+        #include "unistd.h"
+        #include "signal.h"
+
+        void sig_oh(int sig){
+            printf("ALARM TING TING........");
+            signal(SIGALRM,sig_oh);
+        }
+        
+        int main(){
+            signal(SIGALRM,sig_oh);
+            alarm(2);
+            while(1){
+                printf("Hello World\n");
+                sleep(1);
+            }
+        }
+    </pre>
+    <hr>
+</body>
+</html>
