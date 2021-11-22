@@ -54,6 +54,7 @@ a{
 .link{
     font-family: 'Roboto Mono', monospace;
     text-align: center;
+    padding: 80px;
 }
 
 .footer{
