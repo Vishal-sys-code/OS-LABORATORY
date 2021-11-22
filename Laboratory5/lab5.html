@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratory 5</title>
+    <link rel="stylesheet" href="lab5.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="favicon_io/site.webmanifest">
+
+    <header class="heading">
+        <h1 class="heading-h1">LABORATORY-5</h1>
+        <h4 class="heading-h3">Replacing the image process</h4>
+    </header>
+<br>
+<br>
+<br>
+
+<!-- <a class="command"></a> <br><br><br> -->
+</head>
+<body>
+    <a class="command"><i>The command will be used is "execv"</i></a> <br><br><br>
+    <a class="command"><b>execv <i>(in C program means ): </i></b>The execv is the function executes the file named by the filename as a new process image.</a> <br><br><br>
+    <a class="command">The argv argument is an array of null terminated strings that is used to give the value for the argv argument to the main function of the program to be executed.
+    </a> <br><br><br>
+    <a class="command">exec family of a functions replaces the current running process with a new process.</a> <br><br><br>
+    <a class="command"><b>Syntax for execv: </b><pre>int execv(const char *path, char *const argv[]);</pre></a> <br><br><br>
+
+    <a class="command"><b><i>Code for various methods of execv function: </i></b></a><br><br>
+    <pre>
+            #include "stdio.h"
+            #include "stdlib.h"
+            #include "unistd.h"
+            
+            int main(){
+                char* count ps_argv[] = {"ps", "-ax", 0};
+                printf("Before handing over");
+                execv("ps", ps_argv);
+                printf("After handing over");
+                printf(Done);
+            }
+    </pre>
+    <br><br><br>
+
+    <pre>
+            #include "stdio.h"
+            #include "stdlib.h"
+            #include "unistd.h"
+            
+            int main(){
+	            char*const ls_argv[] = {"ls","-l",0};
+	            printf("Before handing over");
+	            execv("ls", ls_argv);
+	            printf("After handing over");
+	            printf(Done);
+            }
+    </pre>
+    <br><br><br>
+
+
+    <pre>
+        #include "stdio.h"
+        #include "stdlib.h"
+        #include "unistd.h"
+        int main(){
+            char*const cat_argv[] = {"cat","newfile.txt",0};
+            printf("Before handing over");
+            execv("cat", cat_argv);
+            printf("After handing over");
+            printf(Done);
+        }
+    </pre>
+    <br><br><br>
+
+
+    <pre>
+        #include "stdio.h"
+        #include "stdlib.h"
+        #include "unistd.h"
+        //If we have a file named a program named as: "selectionsort.c" then 
+
+        int main(){
+	        char *args[] = {"./selectionsort.out",0};
+	        printf("Before handing over");
+	        execv("args[0]",args);
+	        printf("After handing over");
+	        printf(Done);
+        }
+    </pre>
+    <br><br><br>
+
+</body>
+</html>
