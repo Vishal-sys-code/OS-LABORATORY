@@ -34,6 +34,7 @@ body{
     color: black;
     border: 2px solid white;
     position: relative;
+    border-radius: 5px;
     box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;
     font-family: 'Ubuntu', sans-serif;
 }
