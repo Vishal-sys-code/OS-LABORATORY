@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratory 3 and 3A</title>
+    <link rel="stylesheet" href="lab3and3a.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="favicon_io/site.webmanifest">
+    <header class="heading">
+        <h1 class="heading-h1">LABORATORY-3</h1>
+        <h4 class="heading-h3">Create a Child Process</h4>
+    </header>
+    <br>
+</head>
+<!-- <a class="command"></a><br><br><br> -->
+<body>
+    <a class="command"><b>Child Process: </b> It is created as it is parent process copy and inherits most of its attribute. This is created by fork() function.
+    </a><br><br><br>
+    <a class="command"><b>fork(): </b> Fork system call is used for creating a new process, which is called child process, which runs concurrently with the process that makes the fork() call.
+    </a><br><br><br>
+    <a class="command"><b>PID: </b>Process Identification Number</a> <br><br><br>
+    <a class="command"><b>getpid(): </b>It returns the process id of the calling process.</a><br><br><br>
+    <a class="command"><b>getppid(): </b>It returns the process id of the parent of the calling process.</a><br><br><br>
+    <a class="command"><b>Process0: </b>It is a special type of a procerss that is creted when the system boots, after forking a child process, process0 becomes the swapper process.</a><br><br><br>
+    <a class="command"><b>pid: </b>When the process started then it is given a unique number called process identification number, this identifies that the process is to the system.</a><br><br><br>
+    <a class="command"><b>ppid: </b>In addition to the unique process identifcation number, each process is assigned a parent process id that tells which process started it.</a><br><br><br>
+    <a class="command"><b>cpid: </b>It is the process id of the job that created the shared memory segment.</a><br><br><br>
+
+    <a class="code-part"><b>Code for Child Process using fork() function: </b></a><br><br><br>
+    <a><b>1 <sup>st</sup> Method</b></a>
+    <pre>
+        #include "stdio.h"
+        #include "stdlib.h"
+        #include "unistd.h"
+        <br>
+        int main(){
+            pid_t pid;
+	        printf("Fork Started");
+	        q = fork();
+	        if(q<0){
+	            printf("Error");
+	        }
+	        else if(q==0){
+		        printf("Child pid: ", getpid());
+		        printf("Parent pid", getppid());
+	        }
+	        else{
+		        printf("Parent pid: ", getpid());
+		        printf("Child pid: ",p);
+	        }
+	        return 0;
+        }
+    </pre>
+    <a><b>2 <sup>nd</sup> Method</b></a>
+    <pre>
+        #include "stdio.h"
+        #include "stdlib.h"
+        #include "unistd.h"
+        
+        int main(){
+	        pid_t pid;
+	        char* message;
+	        int n;
+	        printf("Fork Starting...");
+	        pid = fork();
+	        switch(pid){
+		        case -1:
+			        perror("Error);
+			        exit(1);
+		        case 0:
+			        message = "CHILD PROICESS";
+			        n = 3;
+			        break;
+		        default:
+			        message: "PARENT PROCESS";
+			        n = 3;
+	        }
+	        for(;n>0;n--){
+		        printf("%d\n", (int)getpid());
+		        puts(message);
+		        sleep(1);
+	        }
+	        exit(0);
+        }
+    </pre>
+
+    <hr>
+
+    <header class="heading">
+        <h1 class="heading-h1">LABORATORY-3A</h1>
+        <h4 class="heading-h3">Zombie and Orphan Process</h4>
+    </header>    
+    <br>
+    <br>
+
+    <a class="command"><b>Zombie Process: </b>A process which finished the execution but still has no entry in the process table to report to its parent process is called a zombie process.</a><br><br><br>
+    <a class="command"><b>Orphan Process: </b>A process whose parent process no more exist i.e. either finished or terminated without waiting for its child process to terminate is called orphan process.
+    </a><br><br><br>
+
+    <a class="code-part"><b>Code for Zombie Process: </b></a><br><br>
+
+    <pre>
+        #include "stdio.h"
+        #include "stdlib.h"
+        #include "unistd.h"
+
+        int main(){
+            pid_t id,pid,cid;
+            char* message;
+            int n;
+            printf("Fork Starting...");
+            id = fork();
+            switch(id){
+                case -1:
+                    perror("Error);
+                    exit(1);
+                case 0:
+                    message = "CHILD PROICESS";
+                    n = 2;
+                    cid = id;
+                    break;
+                default:
+                    message: "PARENT PROCESS";
+                    n = 4;
+                    pid = id;
+            }
+            for(;n>0;n--){
+                printf("%d\t%d\t%d\t", (int)getpid(),p,id);
+                puts(message);
+                sleep(1);
+                if(n==1 and id == cid){
+                    printf("ZOMBIE CHILD EXITING\n");
+                }
+                if(n==1 and id == pid){
+                    system("ps -ax");
+                    printf("PARENT EXITING\n");
+                }
+            }
+        }
+    </pre>
+<br>
+<br>
+    <a class="code-part"><b>Code for Orphan Process: </b></a><br><br>
+
+    <pre>
+        #include "stdio.h"
+        #include "stdlib.h"
+        #include "unistd.h"
+
+        int main(){
+            pid_t pid,ppid,cpid;
+            char* message;
+            int n;
+            printf("Fork Starting...");
+            pid = fork();
+            switch(pid){
+                case -1:
+                    perror("Error);
+                    exit(1);
+                case 0:
+                    message = "CHILD PROICESS";
+                    n = 2;
+                    cpid = pid;
+                    break;
+                default:
+                    message: "PARENT PROCESS";
+                    n = 4;
+                    ppid = pid;
+            }
+            for(;n>0;n--){
+                printf("%d\t%d\t%d\t", (int)getpid(),n,id);
+                puts(message);
+                sleep(1);
+                if(n==1 and pid == cpid){
+                    printf("CHILD EXITING\n");
+                }
+                if(n==1 and pid == ppid){
+                    system("ps -ax");
+                    printf("PARENT EXITING\n");
+                }
+            }
+        }
+    </pre>
+    <hr>
+
+</body>
+</html>
