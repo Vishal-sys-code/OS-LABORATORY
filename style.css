@@ -73,4 +73,7 @@ a{
     .one-two-one{
         text-align:center;
     }
+    a{
+        padding-right: 180px;
+    }
   }
