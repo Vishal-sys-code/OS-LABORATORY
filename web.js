@@ -1,0 +1,1 @@
+object.style.textAlign = "center";
