@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&family=Roboto:wght@400;500;700&family=Ubuntu:wght@400;500;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Estonia&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Mono:wght@700&display=swap');
 
 body{
     background-color:  #FEDBD0;
@@ -7,27 +9,31 @@ body{
 
 .heading-h1{
     text-align: center;
-    font-family: 'Roboto', sans-serif;
+    /* font-family: 'Roboto', sans-serif; */
+    font-family: 'Patrick Hand', cursive;
+    font-size: 40px;
 }
 
 .heading-h3{
     text-align: center;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Red Hat Mono', monospace;
+    font-size: 20px;
 }
 
 .heading-h5{
     text-align: center;
-    font-family: 'Roboto Mono', monospace;
+    font-family: 'Ubuntu', sans-serif;
 }
 
 .container{
-    width: 90%;
-    display: inline-grid;
-    grid-template-columns: repeat(auto-fit,minmax(240px, 1fr));
-    grid-gap: 40px;
-    margin: auto;
-    padding: auto;
+    width: 60%;
+    display: grid;
+    padding-left: 50px;
+    grid-template-columns: repeat(auto-fit,minmax(240px, 400fr));
+    grid-gap: 60px;
+    grid-auto-rows: 80px;
     align-content: center;
+    justify-content: center;
 }
 
 .box{
@@ -69,6 +75,7 @@ a{
     text-align: center;
     box-sizing: border-box;
     font-family: 'Estonia', cursive;
+    font-size: 25px;
 }
 
 @media screen and (max-width: 240px) {
