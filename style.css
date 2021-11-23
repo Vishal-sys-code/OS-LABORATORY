@@ -34,7 +34,7 @@ body{
 .container{
     width: 75%;
     display: grid;
-    padding-left: 40px;
+    padding-left: 35px;
     grid-template-columns: repeat(auto-fit,minmax(240px, 400fr));
     grid-gap: 60px;
     /* grid-auto-rows: 80px; */
