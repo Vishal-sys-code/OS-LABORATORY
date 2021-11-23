@@ -25,13 +25,19 @@ body{
     font-family: 'Ubuntu', sans-serif;
 }
 
+.heading-h5{
+    text-align: center;
+    align-items: center;
+    margin-top: 1px;
+}
+
 .container{
-    width: 70%;
+    width: 75%;
     display: grid;
     padding-left: 50px;
     grid-template-columns: repeat(auto-fit,minmax(240px, 400fr));
     grid-gap: 60px;
-    grid-auto-rows: 80px;
+    /* grid-auto-rows: 80px; */
     align-content: center;
     justify-content: center;
 }
@@ -44,6 +50,16 @@ body{
     border-radius: 5px;
     box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;
     font-family: 'Ubuntu', sans-serif;
+    align-items: center;
+}
+
+.box a{
+    text-align: center;
+    margin-top: 114px;
+}
+
+.box h2{
+    text-align: center;
 }
 
 html {
@@ -58,9 +74,7 @@ h2{
 
 a{
     text-decoration: none;
-    text-align: center;
-    margin: 88px;
-    font-family: 'Ubuntu', sans-serif;
+    justify-content: center;
 }
 
 .link{
@@ -94,4 +108,5 @@ a{
 .anchor{
     margin: auto;
     text-align: center;
+    justify-content: center;
 }
