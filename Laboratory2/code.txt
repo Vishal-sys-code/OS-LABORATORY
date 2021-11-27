@@ -1,0 +1,363 @@
+1.)
+#programme to merge two files or search for a pattern in a file
+read -p "Enter 1 to merge two files and 2 to search for a pattern " choice
+case $choice in
+  1) echo "Two files will be merged"
+  read -p "Enter the first file's name " name1
+  read -p "Enter the second file's name " name2
+  read -p "Enter the merged file's name " name3
+  cat $name1 $name2 > $name3
+  echo "the first file is "
+  cat $name1
+  echo "the second file is "
+  cat $name2
+  echo "the merged file is "
+  cat $name3;;
+  2) echo -e "Search for a pattern in a file \n"
+  read -p "Enter the name of the file " filename
+  read -p "Enter the pattern to be searched for " pattern
+  grep -i -n $pattern $filename;;
+  *) echo "Wrong Input";;
+esac
+-------------------------------------------------------------------------------------------------------------------
+
+2.) 
+#programme to check for palindrome
+read -p "Enter a word " word
+len=`echo $word | wc -c`
+len=`expr $len - 1`
+i=1
+j=`expr $len / 2`
+while test $i -le $j
+do
+  k=`echo $word | cut -c $i`
+  l=`echo $word | cut -c $len`
+  if test $k != $l
+  then
+    echo "String is not palindrome"
+    exit
+  fi
+i=`expr $i + 1`
+len=`expr $len - 1`
+done
+echo "String is palindrome"
+-------------------------------------------------------------------------------------------------------------------
+
+3.) 
+read -p "Enter the file name " filename
+read -p "Enter the starting line number " start
+read -p "Enter the number of lines to be displayed " num
+head -`expr $start + $num - 1` $filename | tail -$num
+-------------------------------------------------------------------------------------------------------------------
+
+4.)
+echo -e "Enter 1 --> check active users\n2-->Display some lines from some file\n3-->update access time of some file\n"
+read -p "Enter your choice_ " choice
+case $choice in
+  1) w;;
+  2) read -p "Enter the file name_ " filename
+  read -p "Enter the no. of lines to be displayed from top_ " number
+  head -$number $filename;;
+  3) read -p "Enter the file name_ " filename
+  touch -a $filename;;
+  *) echo "Invalid choice entered"
+esac
+-------------------------------------------------------------------------------------------------------------------
+
+5.) 
+read -p "Enter the number of elements to be sorted_ " n
+echo "Enter the numbers i.e. array elements"
+i=0
+for ((i=0; i<n; i++))
+do
+  read arr[$i]
+done
+echo "The eneterd array is:"
+for ((i=0; i<n; i++))
+do
+  echo ${arr[$i]}
+done
+for ((i=0; i<n-1; i++))#outer loop of selection sort
+do
+  max=`expr ${arr[$i]}`
+  pos=`expr $i`
+  for ((j=i+1; j<n; j++))#inner loop of selection sort
+  do
+    if test ${arr[$j]} -ge $max
+    then
+      max=`expr ${arr[$j]}`
+      pos=`expr $j`
+    fi
+  done
+  arr[$pos]=`expr ${arr[$i]}`
+  arr[$i]=`expr $max`
+done #sorting completed  
+echo "The sorted array is:"
+for ((i=0; i<n; i++))
+do
+  echo ${arr[$i]}
+done
+-------------------------------------------------------------------------------------------------------------------
+
+6.) 
+read -p "Enter the number of elements_ " n
+echo "Enter the numbers i.e. array elements"
+i=0
+for ((i=0; i<n; i++))
+do
+  read arr[$i]
+done
+echo "The eneterd array is:"
+for ((i=0; i<n; i++))
+do
+  echo ${arr[$i]}
+done
+max=`expr ${arr[0]}`
+min=`expr ${arr[0]}`
+for ((i=0; i<n; i++))#outer loop of selection sort
+do
+  if test ${arr[$i]} -ge $max #to update max value
+    then
+      max=`expr ${arr[$i]}`
+  fi
+  if test ${arr[$i]} -le $min #to update min value
+    then
+      min=`expr ${arr[$i]}`
+  fi
+done #min max found 
+echo "The min value is: $min"
+echo "The max value is: $max"
+-------------------------------------------------------------------------------------------------------------------
+
+7.) 
+( bash -c ' echo $PPID ' > /tmp/myprocess.pid 
+while true ;
+do
+  true;
+  sleep 3
+done ) &
+#c|kill $(</tmp/myprocess.pid)
+-------------------------------------------------------------------------------------------------------------------
+
+8.) 
+read -p "Enter the number of elements to be sorted_ " n
+echo "Enter the numbers i.e. array elements"
+i=0
+for ((i=0; i<n; i++))
+do
+  read arr[$i]
+done
+echo "The eneterd array is:"
+echo ${arr[*]}
+for ((i=0; i<n-1; i++))#outer loop of selection sort
+do
+  for ((j=0; j<n-$i-1; j++))#inner loop of selection sort
+  do
+    if test ${arr[$j]} -ge ${arr[$j+1]}
+    then
+      temp=`expr ${arr[$j]}`
+      arr[$j]=`expr ${arr[$j+1]}`
+      arr[$j+1]=`expr $temp`
+      
+    fi
+  done
+done #sorting completed  
+echo "The sorted array is:"
+echo ${arr[*]}
+-------------------------------------------------------------------------------------------------------------------
+
+9.) 
+read -p "Enter the number of elements to be stored_ " n
+echo "Enter the numbers i.e. array elements"
+i=0
+for ((i=0; i<n; i++))
+do
+  read arr[$i]
+done
+echo "The array is ${arr[*]}"
+read -p "Enter the position of element to be removed_ " i
+i=`expr $i - 1`
+unset 'arr[i]'
+echo "After removal the array is ${arr[*]}"
+-------------------------------------------------------------------------------------------------------------------
+
+10.) 
+echo -e "Enter 1 --> Display File\n2-->Display a particular entry\n3-->Delete a specific entry\n4-->Add a new entry\n5-->Update a specific entry\n_______________________________________\n"
+read -p "Enter your choice_ " choice
+filename=roll_name_city.txt
+case $choice in
+  1) echo -e "___________________________\nThe whole $filename is\n\n"
+  cat $filename;;
+  2) echo "A specific entry will be displayed"
+  read -p "Enter the roll no. of the entry to be displayed_ " roll
+  entry=`grep -e ^$roll $filename`
+  name=`echo $entry | cut -d" " -f2`
+  city=`echo $entry | cut -d" " -f3`
+  echo -e "\n______________________\nRoll: $roll \nName: $name \nCity: $city \n_____________________\n";;
+  3) echo "An entry will be deleted"
+  read -p "Enter the roll no. of the entry to be deleted_ " roll
+  grep -v ^$roll $filename > temp.txt
+  cat temp.txt > $filename
+  rm temp.txt
+  echo "Entry for roll= $roll has been deleted";;
+  4) echo "Add a new entry"
+  read -p "Enter the <roll><space><name><space><city>" entry
+  echo $entry >> $filename
+  echo "Entry added";;
+  5) echo "An entry will be updated"
+  read -p "Enter the roll no. of the entry to be updated_ " roll
+  line_of_roll=`grep -n ^$roll $filename | cut -d":" -f 1`
+  no_of_lines=`wc -l $filename | cut -d " " -f 1`
+  head -`expr $line_of_roll - 1` $filename >temp.txt
+  echo "Enter the updated entry in following format"
+  read -p "Enter the <roll><space><name><space><city>" entry
+  echo $entry >>temp.txt
+  tail -`expr $no_of_lines - $line_of_roll ` $filename >>temp.txt
+  cat temp.txt > $filename
+  rm temp.txt;;
+  *) echo "Invalid entry";;
+esac
+-------------------------------------------------------------------------------------------------------------------
+
+11.) 
+read -p "Enter a number_ " n
+i=0
+sum=0
+length=`expr $(echo $n | wc -c) - 1`
+while [ $i -lt $length ]
+do
+  digit=`echo $n | cut -c \`expr $length - $i \``
+  # echo "The digit is $digit"
+  let var=$digit**$length
+  sum=`expr $var + $sum`
+  i=`expr $i + 1`
+  # echo "The sum is $sum"
+done
+if [ $sum -eq $n ]
+then
+  echo "$n is an armstrong no."
+else
+  echo "$n is not an armstrong no."
+fi
+-------------------------------------------------------------------------------------------------------------------
+
+12.) 
+read -p "Enter a three digit no._  " n
+echo "the permutations are:"
+
+for ((i=1; i<4; i++))
+do
+  a=`echo $n | cut -c $i`
+  # echo  "i=$i"
+  for ((j=1; j<4; j++))
+  do
+    b=`echo $n | cut -c $j`
+    # echo  "j=$j"
+    for ((k=1; k<4; k++))
+    do
+      c=`echo $n | cut -c $k`
+      if [ $i != $j ] && [ $i != $k ] && [ $j != $k ]
+      then
+        echo "$a$b$c"
+      fi
+    done
+  done
+done
+-------------------------------------------------------------------------------------------------------------------
+
+13.) 
+read -p "Enter a word/sentence_  " str
+read -p "Enter the substring to be searched for_  " sub
+str_len=`expr $(echo $str | wc -c) - 1`
+sub_len=`expr $(echo $sub | wc -c) - 1`
+last=`expr $str_len - $sub_len + 1`
+# echo "$str_len $sub_len $last"
+for i in `seq 1 $last`
+do
+  word=$(echo $str | cut -c $i-$(expr $sub_len + $i - 1) )
+  echo "for i= $i substring extracted =  $word"
+  if [ $word == $sub ]
+  then
+    echo -e "\nmatch found. position = $i\n"
+  fi
+done
+-------------------------------------------------------------------------------------------------------------------
+
+14.) 
+read -p "Enter a number_  " n1
+read -p "Enter another number_  " n2
+gcd()
+{
+  if [ $1 -eq 0 -o $1 -eq $2 ]
+  then
+    return $2
+  elif [ $2 -eq 0 ]
+  then
+    return $1
+  else
+    gcd $2 `expr $1 % $2`
+  fi
+}
+gcd $n1 $n2
+echo $?
+-------------------------------------------------------------------------------------------------------------------
+
+15.) 
+read -p "Enter a sentence_  " str
+words=$(echo "$str" | wc -w)
+chars=`echo "$str" | wc -c`
+white=`echo $str | tr -c -d " \t" | wc -c`
+special=`echo $str | tr -c -d "./\{}[]()@!#%^&*-+=" |wc -c`
+echo -e "No. of \nwords = $words\ncharacters = $chars\nwhite spaces = $white\nspecial characters = $special"
+-------------------------------------------------------------------------------------------------------------------
+
+16.) 
+echo -n "Enter a number_  "
+read n
+fact=1
+for i in $(seq 2 $n)
+do
+  fact=$((fact * i)) 
+done
+echo "the factorial of $n = $fact"
+-------------------------------------------------------------------------------------------------------------------
+
+17.) 
+echo -n "Enter the number of terms to be shown_  "
+read n
+a=0
+b=1
+for i in $(seq 1 $n)
+do
+  echo "$a"
+  temp=$a
+  a=$b
+  b=$(($temp + $b))
+done
+-------------------------------------------------------------------------------------------------------------------
+
+18.) 
+read -p "Enter the number of elements to be sorted_ " n
+echo "Enter the numbers i.e. array elements"
+i=0
+for ((i=0; i<n; i++))
+do
+  read arr[$i]
+done
+echo "The entered array is:"
+echo ${arr[*]}
+for ((i=0; i<n-1; i++))#outer loop of bubble sort
+do
+  for ((j=0; j<n-$i-1; j++))#inner loop of bubble sort
+  do
+    if test ${arr[$j]} -le ${arr[$j+1]}
+    then
+      temp=`expr ${arr[$j]}`
+      arr[$j]=`expr ${arr[$j+1]}`
+      arr[$j+1]=`expr $temp`
+    fi
+  done
+done #sorting completed  
+echo "The sorted array is:"
+echo ${arr[*]}
+-------------------------------------------------------------------------------------------------------------------
