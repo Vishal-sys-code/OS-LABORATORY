@@ -77,7 +77,7 @@ a{
     padding: 80px;
 }
 
-.footer{
+#footer{
     display: block;
     padding: 6% 10%;
     text-align: center;
@@ -103,4 +103,9 @@ a{
     margin: auto;
     text-align: center;
     justify-content: center;
+}
+
+.text-foot{
+    font-weight: bold;
+    font-size: 25px;
 }
