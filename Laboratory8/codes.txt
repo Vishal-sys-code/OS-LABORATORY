@@ -1,0 +1,64 @@
+1.) 
+
+#include <stdio.h>
+#include <pthread.h>
+#include <unistd.h>
+
+void *threadfn(){
+	int i;
+	for(int i=1;i<=5;i++){
+		printf("I'm a new thread");
+	}
+}
+
+int main (){
+	pthread_t id;
+	int res,i;
+	res = pthread_create(&id, NULL, &threadfn, NULL);
+	if(res == 0) printf("Thread Created");
+	else printf("Not Created");
+	for(i=1;i<=2;i++){
+		printf("I'm Thread");
+		sleep(2);
+	}
+	return 0;
+}
+
+2.)
+
+#include <stdio.h>
+#include <pthread.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <string.h>
+
+void *thread_function(void *arg);
+char message[] = "HELLO";
+
+void *thread_function(){
+	printf("Thread for is running: %s\n", (char*)arg);
+	sleep(3)
+	strcpy(message, "Bye!");
+	pthread_exit("Thenk wu!!");
+}
+
+int main (){
+	pthread_t mythread;
+	int res;
+	void* thread_result;
+	res = pthread_create(&mythread, NULL, &thread_function, message);
+	if(res!=0){
+		perror("Thread creation failed");
+		exit(EXIT_FAILURE);
+	}
+	printf("Waiting for thread to finish");
+	res = pthread_join(mythread, &thread_result);
+	if(res!=0){
+		perror("Thread creation failed");
+		exit(EXIT_FAILURE);
+	}
+	printf("Thread for is running: %s\n", (char*)thread_result);
+	printf("Message is now:%s\n", message);
+	exit(EXIT_FAILURE);
+	return 0;
+}
